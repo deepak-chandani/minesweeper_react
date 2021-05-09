@@ -1,24 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import Board from './components/Board';
+// import './App.css';
+
+const NUMBER_OF_MINES = 10;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h3 className="title">Minesweeper</h3>      
+      <Board size="7" numberOfMines={NUMBER_OF_MINES} />
+    </>
   );
 }
 
