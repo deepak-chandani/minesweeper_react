@@ -3,18 +3,8 @@ import { TILE_STATUSES, GAME_STATUS } from "../constants";
 import { countMinesAroundTile, findAdjacentTiles, getMinePositions } from "../utils";
 import Tile from "./Tile";
 
-function useForceUpdate(){
-  const [value, setValue] = React.useState(0);
-
-  const forceUpdate = () => setValue(v => v+1)
-
-  return forceUpdate
-}
-
-
 function Board(props) {
   const { size, numberOfMines } = props;
-  const forceUpdate = useForceUpdate();
   const [gameStatus, setGameStatus] = React.useState(GAME_STATUS.RUNNING);
   const [minePositions] = React.useState(getMinePositions(size, numberOfMines)); // we want to persist this across re-renders
   console.log(minePositions);
@@ -106,22 +96,20 @@ function Board(props) {
     if(tiles[x][y].status === TILE_STATUSES.MINE){
         return;
     }
-    if(tiles[x][y].status !== TILE_STATUSES.HIDDEN){
+    if(tiles[x][y].status !== TILE_STATUSES.HIDDEN){ // MARKED or NUMBER tile
         return;
     }
 
     const adjacentTiles = findAdjacentTiles(coordinates, tiles);
     const countNearbyMines = adjacentTiles.reduce((sum, t) => t.isMine ? sum+1 : sum, 0);
+    console.log({adjacentTiles});
     console.log({countNearbyMines});
     if(countNearbyMines === 0){
         updateTile(coordinates, {status: TILE_STATUSES.NUMBER});
-        /**
-         * TODO:
-         * iterate over every adjacent tile & recursively call revealTile for that tile's coordinates
-         */
+         //iterate over every adjacent tile & recursively call revealTile for that tile's coordinates
         adjacentTiles.forEach(tile => {
             // revealTile(tile.coordinates)
-            // setTimeout(() => revealTile(tile.coordinates), 100)
+            setTimeout(() => revealTile(tile.coordinates), 20)
             //updateTile(tile.coordinates, {status: TILE_STATUSES.NUMBER});
         })
     }else{

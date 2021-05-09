@@ -6,7 +6,7 @@ export function getMinePositions(boardSize, numberOfMines){
             x: getRandomNumber(boardSize),
             y: getRandomNumber(boardSize),
         };
-        
+
         const isDuplicate = positions.some((e) => e.x===pos.x && e.y===pos.y);
         if(!isDuplicate){
             positions.push(pos);
@@ -42,6 +42,10 @@ export function findAdjacentTiles({x, y}, boardTiles){
         for(let yOffset=-1; yOffset<=1; yOffset++){
             let tile = boardTiles[x + xOffset]?.[y + yOffset];
             if(tile){
+                const {x:tx,y:ty} = tile.coordinates;
+                if(tx==x && ty==y){
+                    continue;
+                }
                 adjacentTiles.push(tile);
             }
         }
