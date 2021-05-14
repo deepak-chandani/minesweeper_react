@@ -8,5 +8,6 @@ export const TILE_STATUSES = {
 export const GAME_STATUS = {
     RUNNING: "running",
     END: "end",
+    WON: "won",
 };
 

@@ -13,7 +13,12 @@ function Tile(props) {
   } = props;
   console.log("Tile rendered");
   const displayStatus = isMine && displayMine ? TILE_STATUSES.MINE : status;
-  const displayText = isMine && displayMine ? "💣" : text;
+  let displayText = isMine && displayMine ? "💣" : text;
+
+  if(status===TILE_STATUSES.MARKED){
+    displayText = '🚩';
+  }
+
   return (
     <div data-status={displayStatus} data-x={x} data-y={y} onClick={onClick} onContextMenu={onClick}>
       {displayText}

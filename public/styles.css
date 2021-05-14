@@ -55,6 +55,6 @@ body {
   background-color: none;
 }
 
-.board > [data-status="marked"] {
+/* .board > [data-status="marked"] {
   background-color: yellow;
-}
+} */

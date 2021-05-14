@@ -30,6 +30,11 @@ function Board(props) {
 
   const boardRef = React.useRef();
 
+  React.useEffect(() => {
+    checkWin();
+    updateMinesLeft();
+  }, [tiles]);
+
   function isMinePosition(pos) {
     return minePositions.some((m) => m.x === pos.x && m.y === pos.y);
   }
@@ -70,6 +75,44 @@ function Board(props) {
     // forceUpdate();
   }
 
+  function checkWin(){
+    let countMarked=0, countHidden=0;
+    tiles.forEach(row => {
+      countMarked = row.reduce((sum, t) => {
+         if(t.status === TILE_STATUSES.MARKED){
+           return sum+1;
+         }else if (t.status === TILE_STATUSES.HIDDEN){
+          countHidden++;
+         }
+
+         return sum;
+       }, countMarked);
+    });
+
+    console.log("inside checkWin", {countMarked, countHidden});
+    if(countHidden===0 && countMarked == props.numberOfMines){
+      setGameStatus(GAME_STATUS.WON)
+      // alert("Game Won !!");
+    }
+  }
+
+  function updateMinesLeft(){
+    console.log("updateMinesLeft", tiles);
+
+    let countMarked=0;
+   tiles.forEach(row => {
+     countMarked = row.reduce((sum, t) => {
+        if(t.status === TILE_STATUSES.MARKED){
+          return sum+1;
+        }
+
+        return sum;
+      }, countMarked);
+   });
+
+    setMinesLeft(numberOfMines - countMarked);
+  }
+
   const toggleMarkedTile = ({ x, y }) => {
     setTiles((v) => {
       const newVal = [];
@@ -80,9 +123,7 @@ function Board(props) {
         newVal[x][y].status == TILE_STATUSES.MARKED
           ? TILE_STATUSES.HIDDEN
           : TILE_STATUSES.MARKED;
-      if (newVal[x][y].status === TILE_STATUSES.MARKED) {
-        setTimeout(() => setMinesLeft((i) => i - 1), 50);
-      }
+
       return newVal;
     });
   };
@@ -149,7 +190,7 @@ function Board(props) {
       for (let j = 0; j < size; j++) {
         const tile = tiles[i][j];
         const props = {};
-        if(gameStatus==="end"){
+        if(gameStatus===GAME_STATUS.END || gameStatus===GAME_STATUS.WON){
             props.displayMine=true;
         }
 
@@ -175,6 +216,7 @@ function Board(props) {
     <>
       {gameStatus===GAME_STATUS.RUNNING && <div className="subtext">Mines Left: {minesLeft}</div>}
       {gameStatus===GAME_STATUS.END && <div className="subtext">You lose <button onClick={() => window.location.reload()}>Restart</button> </div>}
+      {gameStatus===GAME_STATUS.WON && <div className="subtext">🥳🎊 You Win 🎉🥳<button onClick={() => window.location.reload()}>Restart</button> </div>}
       <div className="board" ref={boardRef}>
         {drawTiles()}
       </div>
