@@ -2,7 +2,7 @@ import React from 'react';
 import Board from './components/Board';
 // import './App.css';
 
-const NUMBER_OF_MINES = 3;
+const NUMBER_OF_MINES = 4;
 
 function App() {
   const [numberOfMines, setNumberOfMines] = React.useState(3);
