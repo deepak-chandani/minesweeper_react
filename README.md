@@ -1,11 +1,4 @@
-<h1 align="center">
-  <img src="/minesweeper_demo.jpg" alt="Minesweeper game demo" width="265">
-  <video width="320" height="240" controls>
-    <source src="minesweeper_demo.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-   </video>
-  <br>
-</h1>
+https://user-images.githubusercontent.com/15975603/118352708-7814c300-b580-11eb-894d-8074128ce8e4.mp4
 
 <h3 align="center">Minesweeper Game build with React Hooks practice project - <a href="https://deep-mines.surge.sh">Minesweeper Game (using hooks) demo</a></h3>
 
